@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Splash For Reveal.js</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="manifest" href="img/site.webmanifest">
+    <link rel="mask-icon" href="img/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/serif.css" id="theme" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css" id="highlight">
+    <style>
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+
+        .description {
+            width: 19%;
+            display: inline-block;
+            vertical-align: top;
+            padding-right: 20px;
+            box-sizing: border-box;
+        }
+
+        .iframe-container {
+            width: 80%;
+            display: inline-block;
+        }
+
+        .reload-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size:100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h1>Welcome to the Reveal Splash Plugin Demo</h1>
+                <h3>Have a large presentation? <em>No problem!</em></h3>
+                <p>Don't stare at a blank screen, splash it up a bit with <code>reveal-splash</code>!</p>
+                <p style="font-style: italic;font-size:85%;">Click the button to reload and preview the default splash screen again.</p>
+                <button id="reloadPage" class="reload-button">Reload Presentation</button>
+            </section>
+            
+            <section>
+                <h2>Installation Instructions</h2>
+                <p>To install the Splash plugin for Reveal.js, you can either include it directly in your HTML file using a module script or install it via npm if you're using a Node.js environment.</p>
+                <h3>Option 1: Direct HTML Include</h3>
+                <pre><code class="language-html">
+            <script type="module">
+                import Splash from './path/to/reveal-splash.esm.js';
+            </script>
+                </code></pre>
+            
+                <h3>Option 2: Install via npm</h3>
+                <pre><code class="language-bash">
+            npm install reveal-splash
+                </code></pre>
+                <p>After installation, import the plugin in your JavaScript file:</p>
+                <pre><code class="language-javascript">
+            import Splash from 'reveal-splash';
+                </code></pre>
+            </section>
+            
+            <section>
+                <h2>Usage</h2>
+                <p>Once the plugin is installed, you can initialize your Reveal.js presentation with the Splash plugin by adding it to the <code>Reveal.initialize</code> call.</p>
+                <pre><code class="language-javascript">
+            Reveal.initialize({
+                plugins: [Splash]
+            });
+                </code></pre>
+            </section>
+            
+            <section>
+                <h2>Configuration Options</h2>
+                <p>The Splash plugin provides several configuration options that allow you to customize the splash screen. Below is a table describing each option, its type, default value, and description:</p>
+                <table style="font-size: 75%;">
+                    <thead>
+                        <tr>
+                            <th>Option</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>splashImage</code></td>
+                            <td>Boolean/String</td>
+                            <td><code>false</code></td>
+                            <td>Specifies the image to display on the splash screen. If false, a spinner will be used.</td>
+                        </tr>
+                        <tr>
+                            <td><code>backgroundColor</code></td>
+                            <td>String</td>
+                            <td><code>"#ffffff"</code></td>
+                            <td>The background color of the splash screen. Accepts any valid CSS color.</td>
+                        </tr>
+                        <tr>
+                            <td><code>text</code></td>
+                            <td>String</td>
+                            <td><code>"Loading..."</code></td>
+                            <td>The text to display on the splash screen. Can be a plain string or HTML.</td>
+                        </tr>
+                        <tr>
+                            <td><code>fontOptions</code></td>
+                            <td>Object</td>
+                            <td><code>{ fontFamily: "Arial, sans-serif", fontSize: "18px", color: "#333" }</code></td>
+                            <td>An object defining the font properties of the splash text. Supports standard CSS font properties.</td>
+                        </tr>
+                        <tr>
+                            <td><code>minimumDisplay</code></td>
+                            <td>Number</td>
+                            <td><code>1</code></td>
+                            <td>The minimum time (in seconds) that the splash screen should be displayed.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h3>Feature 1: Customization Showcase</h3>
+                <div class="description">
+                    <p style="font-size: 80%; text-align: left;">
+                        Experience the power of customization with the Splash plugin!
+                    </p>
+                    <p style="font-size: 70%; text-align: left; font-style:italic;">
+                        This embedded presentation uses unique configuration options to create a splash screen that perfectly matches its style.
+                    </p>
+                    <button id="reloadIframe1" class="reload-button">Click to see it in action!</button>
+                </div>
+                <div class="iframe-container">
+                    <iframe id="iframe1" src="embedded-presentation-1.html"></iframe>
+                </div>
+            </section>
+
+            <section>
+                <h3>Feature 2: Image Customization</h3>
+                <div class="description">
+                    <p style="font-size: 80%; text-align: left;">
+                        Take your splash screen to the next level with your own image!
+                    </p>
+                    <p style="font-size: 70%; text-align: left; font-style:italic;">
+                        This embedded presentation demonstrates how you can use a custom image to create a unique loading experience.
+                    </p>
+                    <button id="reloadIframe2" class="reload-button">Click to see it in action!</button>
+                </div>
+                <div class="iframe-container">
+                    <iframe id="iframe2" src="embedded-presentation-2.html"></iframe>
+                </div>
+            </section>
+
+            <section>
+                <h3>Feature 3: Advanced HTML Effects</h3>
+                <div class="description">
+                    <p style="font-size: 80%; text-align: left;">
+                        Unleash the full potential of HTML and CSS in your splash screens! 
+                    </p>
+                    <p style="font-size: 70%; text-align: left; font-style:italic;">
+                        This demo shows how to animate your text with custom HTML and CSS effects, making your presentation stand out.
+                    </p>
+                    <button id="reloadIframe3" class="reload-button">Click to see the magic!</button>
+                </div>
+                <div class="iframe-container">
+                    <iframe id="iframe3" src="embedded-presentation-3.html"></iframe>
+                </div>
+            </section>
+
+            <section>
+                <h3>Feature 3: More!</h3>
+                <div class="description">
+                    <p style="font-size: 80%; text-align: left;">
+                        Unleash the full potential of HTML and CSS in your splash screens! 
+                    </p>
+                    <p style="font-size: 70%; text-align: left; font-style:italic;">
+                        Because, why not?
+                    </p>
+                    <button id="reloadIframe4" class="reload-button">Click to see the magic!</button>
+                </div>
+                <div class="iframe-container">
+                    <iframe id="iframe4" src="embedded-presentation-4.html"></iframe>
+                </div>
+            </section>
+
+            <section>
+                <h2>Wrapping Up</h2>
+                <p style="font-size: 90%; text-align: center;">
+                    We hope you enjoyed exploring the <code>reveal-splash</code> plugin and its powerful customization options. Whether you’re adding a simple loading screen or creating a fully immersive experience, this plugin is here to help you make a lasting impression with your Reveal.js presentations.
+                </p>
+                <p style="font-size: 85%; text-align: center; font-style: italic;">
+                    Remember, the only limit is your creativity!
+                </p>
+            </section>
+
+            <section>
+                <h2>Thank You!</h2>
+                <p style="font-size: 90%; text-align: center;">
+                    Thank you for watching this presentation. Stay connected and keep in touch!
+                </p>
+                <div style="text-align: center;">
+                    <a href="https://github.com/Khlick" target="_blank" style="margin: 0 15px;">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/github.png" alt="GitHub">
+                    </a>
+                    <a href="https://linkedin.com/in/khrisgriffis" target="_blank" style="margin: 0 15px;">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/linkedin.png" alt="LinkedIn">
+                    </a>
+                    <a href="https://www.npmjs.com/~khlick" target="_blank" style="margin: 0 15px;">
+                        <img src="https://img.icons8.com/color/30/000000/npm.png" alt="npm">
+                    </a>
+                </div>
+            </section>
+
+        </div>
+    </div>
+    <script type="module">
+        import Reveal from "https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.esm.js";
+        import Splash from "./reveal-splash.esm.js";
+        import RevealHighlight from "https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.esm.js";
+        
+        // Initialize Reveal.js with the Splash and Highlight plugins and custom configurations
+        Reveal.initialize({
+            plugins: [Splash, RevealHighlight],
+            width: 1920,
+            height: 1080,
+            minScale: 0.1,
+            maxScale: 1.25
+        });
+    </script>
+    <script>
+        // Function to reload an iframe
+        function reloadIframe(iframeId) {
+            const iframe = document.getElementById(iframeId);
+            const src = iframe.src;
+            const parent = iframe.parentNode;
+
+            // Remove the iframe from the DOM
+            parent.removeChild(iframe);
+
+            // Create a new iframe element
+            const newIframe = document.createElement("iframe");
+            newIframe.id = iframeId;
+            newIframe.src = src; // Set the src attribute to the original source
+            newIframe.width = iframe.width;
+            newIframe.height = iframe.height;
+            newIframe.style.border = iframe.style.border;
+
+            // Append the new iframe to the parent element
+            parent.appendChild(newIframe);
+        }
+
+        // Attach event listeners after the page has loaded
+        window.addEventListener("load", () => {
+            document.getElementById("reloadPage").addEventListener("click", () => {
+                window.location.reload();
+            });
+
+            document.getElementById("reloadIframe1").addEventListener("click", () => {
+                reloadIframe("iframe1");
+            });
+
+            document.getElementById("reloadIframe2").addEventListener("click", () => {
+                reloadIframe("iframe2");
+            });
+
+            document.getElementById("reloadIframe3").addEventListener("click", () => {
+                reloadIframe("iframe3");
+            });
+
+            document.getElementById("reloadIframe4").addEventListener("click", () => {
+                reloadIframe("iframe4");
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,172 @@
+<!-- embedded-presentation-4.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Embedded Presentation 3</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/sky.css" id="theme">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/zenburn.css" id="highlight">
+</head>
+
+<style>
+  /* Neon glow effect */
+  .neon-glow {
+    color: #00FFFF;
+    text-shadow: 
+      0 0 5px #00FFFF,
+      0 0 10px #00FFFF,
+      0 0 20px #00FFFF,
+      0 0 30px #00FFFF,
+      0 0 40px #00FFFF,
+      0 0 50px #00FFFF,
+      0 0 75px #00FFFF;
+    animation: pulse 1.5s infinite alternate, flicker 2s infinite;
+  }
+
+  /* Pulse effect */
+  @keyframes pulse {
+    0% {
+      text-shadow: 
+        0 0 5px #00FFFF,
+        0 0 10px #00FFFF,
+        0 0 20px #00FFFF,
+        0 0 30px #00FFFF,
+        0 0 40px #00FFFF,
+        0 0 50px #00FFFF,
+        0 0 75px #00FFFF;
+      transform: scale(1);
+    }
+    100% {
+      text-shadow: 
+        0 0 10px #00FFFF,
+        0 0 20px #00FFFF,
+        0 0 30px #00FFFF,
+        0 0 40px #00FFFF,
+        0 0 50px #00FFFF,
+        0 0 75px #00FFFF,
+        0 0 100px #00FFFF;
+      transform: scale(1.1);
+    }
+  }
+
+  /* Flicker effect */
+  @keyframes flicker {
+    0% { opacity: 1; }
+    5% { opacity: 0.8; }
+    10% { opacity: 1; }
+    15% { opacity: 0.9; }
+    20% { opacity: 1; }
+    25% { opacity: 0.95; }
+    30% { opacity: 1; }
+    35% { opacity: 0.85; }
+    40% { opacity: 1; }
+    100% { opacity: 1; }
+  }
+</style>
+
+<body>
+
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <p style="font-size: 85%;font-style:italic;">Go crazy with it!</p>
+        <pre><code class="language-javascript" data-trim style="font-size: 95%;">
+Reveal.initialize({
+plugins: [Splash],
+splash: {
+splashImage: 'img/splash-logo.png',
+backgroundColor: '#333',
+text: '<p class="neon-glow">Make a Splash with reveal-splash!</p>',
+fontOptions: { color: "#ffffff", fontSize: "36px" },
+minimumDisplay: 5
+}
+});
+        </code></pre>
+      </section>
+      <section>
+        <h3>CSS Neon Glow and Animation</h3>
+        <pre><code class="language-css" data-trim style="font-size: 95%;max-height:300px;overflow-y:scroll;overflow-x:hidden;">
+/* Neon glow effect */
+.neon-glow {
+  color: #00FFFF;
+  text-shadow: 
+    0 0 5px #00FFFF,
+    0 0 10px #00FFFF,
+    0 0 20px #00FFFF,
+    0 0 30px #00FFFF,
+    0 0 40px #00FFFF,
+    0 0 50px #00FFFF,
+    0 0 75px #00FFFF;
+  animation: pulse 1.5s infinite alternate, flicker 2s infinite;
+}
+
+/* Pulse effect */
+@keyframes pulse {
+  0% {
+    text-shadow: 
+      0 0 5px #00FFFF,
+      0 0 10px #00FFFF,
+      0 0 20px #00FFFF,
+      0 0 30px #00FFFF,
+      0 0 40px #00FFFF,
+      0 0 50px #00FFFF,
+      0 0 75px #00FFFF;
+    transform: scale(1);
+  }
+  100% {
+    text-shadow: 
+      0 0 10px #00FFFF,
+      0 0 20px #00FFFF,
+      0 0 30px #00FFFF,
+      0 0 40px #00FFFF,
+      0 0 50px #00FFFF,
+      0 0 75px #00FFFF,
+      0 0 100px #00FFFF;
+    transform: scale(1.1);
+  }
+}
+
+/* Flicker effect */
+@keyframes flicker {
+  0% { opacity: 1; }
+  5% { opacity: 0.8; }
+  10% { opacity: 1; }
+  15% { opacity: 0.9; }
+  20% { opacity: 1; }
+  25% { opacity: 0.95; }
+  30% { opacity: 1; }
+  35% { opacity: 0.85; }
+  40% { opacity: 1; }
+  100% { opacity: 1; }
+}
+        </code></pre>
+      </section>
+    </div>
+  </div>
+
+  <script type="module">
+    import Reveal from 'https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.esm.js';
+    import Splash from './reveal-splash.esm.js';
+    import RevealHighlight from "https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.esm.js";
+
+    // Initialize Reveal.js with the Splash plugin for this embedded presentation
+    Reveal.initialize({
+      plugins: [ Splash, RevealHighlight ],
+      splash: {
+        splashImage: 'img/splash-logo.png',
+        backgroundColor: '#1B292F',
+        text: '<p class="neon-glow">Make a Splash with reveal-splash!</p>',
+        fontOptions: { color: "#ffffff", fontSize: "36px" },
+        minimumDisplay: 5
+      },
+      width: 1200,
+      height: 450
+    });
+  </script>
+
+</body>
+
+</html>

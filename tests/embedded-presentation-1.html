@@ -1,0 +1,58 @@
+<!-- embedded-presentation-1.html -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Embedded Presentation 1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css" id="highlight">
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+      <section>
+        <p style="font-size: 85%;font-style:italic;">Tailor the splash screen to your exact needs.</p>
+        <pre><code class="language-javascript" data-trim style="font-size: 90%;">
+Reveal.initialize({
+  plugins: [Splash],
+  splash: {
+  backgroundColor: '#111',
+  text: 'what the sigma?'
+  fontOptions: { 
+    fontFamily: '"Lucida Console", Courier, monospace;', 
+    fontSize: "30px", 
+    color: "#ffffff" 
+  }, // Custom font options
+  minimumDisplay: 1.5 // Minimum display time in seconds
+  }
+});
+        </code></pre>
+    </section>
+    </div>
+</div>
+
+<script type="module">
+    import Reveal from 'https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.esm.js';
+    import Splash from './reveal-splash.esm.js';
+    import RevealHighlight from "https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.esm.js";
+
+    // Initialize Reveal.js with the Splash plugin for this embedded presentation
+    Reveal.initialize({
+        plugins: [ Splash, RevealHighlight ],
+        splash: {
+            splashImage: null, // Use default spinner
+            backgroundColor: '#111111', // Darker background color
+            text: 'what the sigma?', // Custom loading text
+            fontOptions: { fontFamily: '"Lucida Console", Courier, monospace;', fontSize: "30px", color: "#ffffff" }, // White text
+            minimumDisplay: 1.5 // Minimum display time in seconds
+        },
+        width: 1200,
+        height: 450
+    });
+</script>
+
+</body>
+</html>

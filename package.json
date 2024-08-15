@@ -1,0 +1,55 @@
+{
+  "name": "reveal-splash",
+  "version": "1.0.0",
+  "description": "A Reveal.js plugin that displays a splash image until the presentation is fully loaded.",
+  "keywords": [
+    "reveal.js",
+    "reveal-plugins",
+    "reveal",
+    "reveal.js-plugins",
+    "splash",
+    "presentation",
+    "preloader"
+  ],
+  "main": "reveal-splash.js",
+  "module": "reveal-splash.esm.js",
+  "scripts": {
+    "build": "gulp build:reveal-splash",
+    "copy": "gulp copy:dist",
+    "prepublishOnly": "npm run build",
+    "test": "npm run build && npm run copy"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/plugin-transform-modules-commonjs": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "babel-plugin-transform-html-import-to-string": "^2.0.0",
+    "core-js": "^3.37.1",
+    "del": "^7.1.0",
+    "gulp": "^5.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-rename": "^2.0.0",
+    "rimraf": "^5.0.7",
+    "rollup": "^2.79.1"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Khlick/reveal-splash",
+  "bugs": "https://github.com/Khlick/reveal-splash/issues",
+  "author": {
+    "name": "Khris Griffis, Ph.D.",
+    "email": "khris.griffis.phd@gmail.com",
+    "url": "https://khrisgriffis.com"
+  },
+  "files": [
+    "reveal-splash.js",
+    "reveal-splash.esm.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Khlick/reveal-splash.git"
+  }
+}

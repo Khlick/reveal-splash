@@ -1,0 +1,136 @@
+name: Create reveal-splash Release From Tag
+
+on:
+  push:
+    tags:
+      - 'v*.*.*' 
+
+jobs:
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # latest stable Node.js version Jul2024
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+
+      - name: Install github_changelog_generator
+        run: gem install github_changelog_generator
+
+      - name: Generate changelog
+        run: github_changelog_generator -u ${{ github.repository_owner }} -p ${{ github.event.repository.name }} --token ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Read changelog
+        id: read_changelog
+        run: |
+          echo "CHANGELOG<<EOF" >> $GITHUB_ENV
+          cat CHANGELOG.md >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Get the version from package.json
+        id: get_version
+        run: echo "VERSION=$(node -p 'require(\"./package.json\").version')" >> $GITHUB_ENV
+
+      - name: Get tag message
+        id: get_tag_message
+        run: |
+          TAG_MESSAGE=$(git for-each-ref refs/tags/${{ github.ref }} --format='%(contents)')
+          echo "TAG_MESSAGE<<EOF" >> $GITHUB_ENV
+          echo "$TAG_MESSAGE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Combine tag message and changelog
+        id: combine_messages
+        run: |
+          echo "RELEASE_BODY<<EOF" >> $GITHUB_ENV
+          echo "${{ env.TAG_MESSAGE }}" >> $GITHUB_ENV
+          echo "" >> $GITHUB_ENV
+          echo "${{ env.CHANGELOG }}" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+        
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+          body: ${{ env.RELEASE_BODY }}
+
+      - name: Upload esm.js and .js files
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/reveal-splash.esm.js
+          asset_name: reveal-splash.esm.js
+          asset_content_type: application/javascript
+
+      - name: Upload js files
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/reveal-splash.js
+          asset_name: reveal-splash.js
+          asset_content_type: application/javascript
+
+  publish:
+    runs-on: ubuntu-latest
+
+    # Use publish rules for custom control flags
+    environment: publish-rules
+    
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build Project
+        run: npm run build
+
+      - name: Move built files to root directory
+        run: |
+          mv dist/reveal-splash.js .
+          mv dist/reveal-splash.esm.js .
+
+      - name: Print PUBLISH_ENABLED
+        run: echo "PUBLISH_ENABLED ${{ vars.PUBLISH_ENABLED && 'true' || 'false' }}"
+
+      - name: Publish to npm
+        if: ${{ vars.PUBLISH_ENABLED }}
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

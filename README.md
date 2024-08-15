@@ -53,6 +53,8 @@ Reveal.initialize({
 });
 ```
 
+_Note: If I'm not mistaken, reveal.js will load each plugin asynchronously, so you may see other plugins at work before this kicks in._
+
 ## Configuration
 
 The plugin offers several configuration options to help you create the perfect splash screen:

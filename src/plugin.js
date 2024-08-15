@@ -7,37 +7,54 @@ class Plugin {
       splashImage: false,
       backgroundColor: "#ffffff",
       text: "Loading...",
-      fontOptions: { fontFamily: "Arial, sans-serif", fontSize: "18px", color: "#333" },
+      fontOptions: {
+        fontFamily: "Arial, sans-serif",
+        fontSize: "18px",
+        color: "#333"
+      },
       minimumDisplay: 1,
       ...config // Merge user configurations
     };
-    
+
     this.splash = null;
   }
 
   async init(Reveal) {
-    // keep reveal pointer
+    // Keep reveal pointer
     this.Reveal = Reveal;
+
     // Find reveal configs for this plugin
     const revealConfig = findConfig(
       this.Reveal.getConfig(),
-      ['splash', 'revealsplash']) // optional labels
-      ;
-    
+      ['splash', 'revealsplash']
+    );
+
     // Merge the Reveal.js configuration into the existing config
     this.config = {
       ...this.config,
       ...revealConfig
     };
+
+    // Start the timer to track the initialization time
+    const startTime = Date.now();
+
     // Draw the splash
     this.initializeSplash();
 
     // Set up a listener to remove the splash when Reveal is ready
     this.Reveal.on('ready', () => {
-      // Ensure the minimum display time has passed
-      setTimeout(() => {
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = this.config.minimumDisplay * 1000 - elapsedTime;
+
+      if (remainingTime > 0) {
+        // Wait for the remaining time before removing the splash
+        setTimeout(() => {
+          this.removeSplash();
+        }, remainingTime);
+      } else {
+        // Minimum display time has already passed, remove the splash immediately
         this.removeSplash();
-      }, this.config.minimumDisplay * 1000); // Convert to milliseconds
+      }
     });
   }
 
@@ -69,30 +86,30 @@ class Plugin {
     // Create the splash graphic or splash image
     const splashGraphic = document.createElement('div');
     if (this.config.splashImage) {
-        const splash = document.createElement('img');
-        splash.src = this.config.splashImage;
-        splash.style.maxWidth = '50%';
-        splash.style.maxHeight = '50%';
-        splash.style.marginBottom = '5px';  // Add margin to separate image from text
-        splashGraphic.appendChild(splash);
+      const splash = document.createElement('img');
+      splash.src = this.config.splashImage;
+      splash.style.maxWidth = '50%';
+      splash.style.maxHeight = '50%';
+      splash.style.marginBottom = '5px'; // Add margin to separate image from text
+      splashGraphic.appendChild(splash);
     } else {
-        splashGraphic.style.width = '50px';
-        splashGraphic.style.height = '50px';
-        splashGraphic.style.border = '5px solid #ccc';
-        splashGraphic.style.borderTop = '5px solid #333';
-        splashGraphic.style.borderRadius = '50%';
-        splashGraphic.style.animation = 'spin 1s linear infinite';
-        splashGraphic.style.marginBottom = '20px';  // Add margin to separate spinner from text
+      splashGraphic.style.width = '50px';
+      splashGraphic.style.height = '50px';
+      splashGraphic.style.border = '5px solid #ccc';
+      splashGraphic.style.borderTop = '5px solid #333';
+      splashGraphic.style.borderRadius = '50%';
+      splashGraphic.style.animation = 'spin 1s linear infinite';
+      splashGraphic.style.marginBottom = '20px'; // Add margin to separate spinner from text
     }
 
     // Create the splash text
     let splashText;
     if (this.isHtmlString(this.config.text)) {
-        splashText = document.createElement('div');
-        splashText.innerHTML = this.config.text;
+      splashText = document.createElement('div');
+      splashText.innerHTML = this.config.text;
     } else {
-        splashText = document.createElement('p');
-        splashText.textContent = this.config.text;
+      splashText = document.createElement('p');
+      splashText.textContent = this.config.text;
     }
     // append the styles to the element
     Object.assign(splashText.style, this.config.fontOptions);
@@ -109,14 +126,14 @@ class Plugin {
 
     // Add a custom CSS keyframe animation for spinning if no splash image is used
     if (!this.config.splashImage) {
-        const styleSheet = document.createElement('style');
-        styleSheet.innerText = `
+      const styleSheet = document.createElement('style');
+      styleSheet.innerText = `
             @keyframes spin {
                 0% { transform: rotate(0deg); }
                 100% { transform: rotate(360deg); }
             }
         `;
-        this.splash.appendChild(styleSheet);
+      this.splash.appendChild(styleSheet);
     }
   }
 
@@ -145,11 +162,11 @@ class Plugin {
 // Helper
 function findConfig(configs, keys) {
   for (let key of keys) {
-      for (let configKey in configs) {
-          if (configKey.toLowerCase() === key.toLowerCase()) {
-              return configs[configKey];
-          }
+    for (let configKey in configs) {
+      if (configKey.toLowerCase() === key.toLowerCase()) {
+        return configs[configKey];
       }
+    }
   }
   return {}; // Return an empty object if no matching config is found
 }

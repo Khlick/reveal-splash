@@ -1,3 +1,8 @@
+// reveal-splash plugin
+
+// Create a WeakMap to store Reveal instances
+const revealInstances = new WeakMap();
+
 class Plugin {
   constructor(config = {}) {
     // Set default configurations and merge with user-provided config
@@ -19,11 +24,16 @@ class Plugin {
     this.splash = null;
   }
 
-  async init(Reveal) {
-    // Keep reveal pointer
-    this.Reveal = Reveal;
+  // Getter to safely access the Reveal instance using WeakMap
+  get Reveal() {
+    return revealInstances.get(this);
+  }
 
-    // Find reveal configs for this plugin
+  async init(Reveal) {
+    // Store the Reveal instance in the WeakMap
+    revealInstances.set(this, Reveal);
+
+    // Access the Reveal instance through the getter
     const revealConfig = findConfig(
       this.Reveal.getConfig(),
       ['splash', 'revealsplash']
@@ -170,8 +180,6 @@ function findConfig(configs, keys) {
   }
   return {}; // Return an empty object if no matching config is found
 }
-
-
 
 // Export the plugin instance
 const Splash = new Plugin();

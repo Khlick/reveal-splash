@@ -1,6 +1,6 @@
 {
   "name": "reveal-splash",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Reveal.js plugin that displays a splash image until the presentation is fully loaded.",
   "keywords": [
     "reveal.js",
